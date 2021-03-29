@@ -228,7 +228,13 @@ def download_G4Jy_samples():
         freq_low = ['170-231']
         projection = 'SIN'
         if label[m] != 'single':
-            vo_get(ra_d, dec_d, ang_size, proj_opt=projection, freq=freq_low, download_dir=dl_dir, clobber=False)
+            filename = create_filename(ra_d,dec_d,ang_size,freq_low[0])
+            print(os.path.join(dl_dir, filename))
+            if os.path.exists(os.path.join(dl_dir, filename)):
+               print("File %s exits" % filename)
+               continue
+            else:
+               vo_get(ra_d, dec_d, ang_size, proj_opt=projection, freq=freq_low, download_dir=dl_dir, clobber=False)
 
     # example 1 - just to see what is going to be downloaded (low frequencies)
     #vo_get(ra, dec, ang_size, proj_opt=projection, freq=freq_low)
